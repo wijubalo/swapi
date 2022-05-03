@@ -1,0 +1,43 @@
+documentation:
+  version: '1.0'
+  title: 'SWAPI Integration'
+  description: 'Integración de SWAPI - Reto técnico de Indra'
+  endpoints:
+    planet:
+      summary: "Obtiene los planetas del universo de Star Wars"
+      description: "Obtiene los planetas del universo de Star Wars que fueron registrados en DynamoDB"
+      methodResponses:
+        - statusCode: 200
+          responseBody:
+            description: "Planeta"
+          responseModels:
+            application/json: "Planet"
+    findPlanet:
+      summary: "Obtiene un planeta del universo de Star Wars"
+      description: "Obtiene un planeta del universo de Star Wars registrado en DynamoDB"
+      requestBody:
+        description: "body - nsqd"
+      pathParams:
+        - name: "id"
+          description: "ID del planeta"
+          schema:
+            type: "string"
+      methodResponses:
+        - statusCode: 200
+          responseBody:
+            description: "Lista de planetas"
+          responseModels:
+            application/json: "Planet"
+  models:
+    - name: "Planet"
+      description: "Planeta del Universo de Star Wars"
+      contentType: "application/json"
+      schema:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        properties:
+          diametro:
+            type: "string"
+          periodo_rotacion:
+            type: "string"
+          url:
+            type: "string"

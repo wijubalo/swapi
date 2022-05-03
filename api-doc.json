@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "Planet": {
+        "properties": {
+          "diametro": {
+            "type": "string"
+          },
+          "periodo_rotacion": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "title": "SWAPI Integration",
+    "description": "Integración de SWAPI - Reto técnico de Indra",
+    "version": "1.0"
+  },
+  "paths": {
+    "/planet": {
+      "get": {
+        "operationId": "planet",
+        "summary": "Obtiene los planetas del universo de Star Wars",
+        "description": "Obtiene los planetas del universo de Star Wars que fueron registrados en DynamoDB",
+        "responses": {
+          "200": {
+            "description": "Lista de Planetas",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/planet/{id}": {
+      "get": {
+        "operationId": "findPlanet",
+        "summary": "Obtiene un planeta del universo de Star Wars",
+        "description": "Obtiene un planeta del universo de Star Wars registrado en DynamoDB",
+        "responses": {
+          "200": {
+            "description": "Planeta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Planet"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+service: swapi
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  profile: default
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: "*"
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+  - serverless-openapi-documentation
+
+functions:
+  planet:
+    handler: src/handler/planet.get
+    events:
+      - http:
+          method: get
+          path: planet
+  findPlanet:
+    handler: src/handler/planet.find
+    events:
+      - http:
+          method: get
+          path: planet/{id}
+  addPlanet:
+    handler: src/handler/planet.add
+    events:
+      - http:
+          method: post
+          path: planet
+  planet-sw:
+    handler: src/handler/planetSwApi.get
+    events:
+      - http:
+          method: get
+          path: planet-sw
+  findPlanet-sw:
+    handler: src/handler/planetSwApi.find
+    events:
+      - http:
+          method: get
+          path: planet-sw/{id}
+
+resources:
+  Resources:
+    planetTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: planet
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
